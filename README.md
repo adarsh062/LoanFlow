@@ -1,47 +1,20 @@
-# 🚀 LoanFlow — Loan Management System
+# LoanFlow — Full Stack Loan Management System
 
-A full-stack Loan Management System built using **Next.js, Express, MongoDB, and TypeScript** to manage the complete loan lifecycle — from borrower onboarding and loan application to approval, disbursement, repayment, and closure.
+A production-ready Loan Management System that manages the complete loan lifecycle, from borrower onboarding and application to approval, disbursement, repayment, and closure.
 
-## 🌐 Live Demo
+## Live Demo
 
-**Frontend:**  
+Frontend:
 https://loan-flow-steel.vercel.app/login
 
-**Backend API:**  
+Backend:
 https://loanflow-21z9.onrender.com/
 
-> ⚠️ Backend is hosted on Render's free tier. The first request may take 30–60 seconds if the service has been inactive.
+> Note: The backend is hosted on Render's free tier. If the service has been idle, the first request may take up to 30–60 seconds while the server wakes up.
 
 ---
 
-## ✨ Features
-
-### 👤 Borrower Portal
-- User Registration & Login
-- Personal Details Submission
-- BRE (Business Rule Engine) Validation
-- Salary Slip Upload
-- Loan Eligibility Check
-- Loan Application Submission
-- Live Loan Calculation
-
-### 🏢 Operations Dashboard
-- Sales Module
-- Sanction Module
-- Disbursement Module
-- Collection Module
-- Admin Dashboard
-
-### 🔒 Security
-- JWT Authentication
-- Password Hashing (bcrypt)
-- Protected Routes
-- Role-Based Access Control (RBAC)
-- Backend Authorization Middleware
-
----
-
-## 🏗️ Tech Stack
+## Tech Stack
 
 ### Frontend
 - Next.js 16
@@ -64,18 +37,7 @@ https://loanflow-21z9.onrender.com/
 
 ---
 
-## 📂 Project Structure
-
-```text
-LoanFlow
-├── client/     # Next.js Frontend
-├── server/     # Express Backend
-└── README.md
-```
-
----
-
-## 🔑 Demo Credentials
+## Demo Credentials
 
 Password for all accounts:
 
@@ -94,81 +56,18 @@ Password@123
 
 ---
 
-## 🔄 Borrower Journey
+## Project Structure
 
 ```text
-Sign Up / Login
-        ↓
-Personal Details
-        ↓
-BRE Validation
-        ↓
-Salary Slip Upload
-        ↓
-Loan Configuration
-        ↓
-Apply Loan
-        ↓
-PENDING
+client/     → Next.js Frontend
+server/     → Express Backend
 ```
 
 ---
 
-## 📈 Loan Lifecycle
+## Environment Variables
 
-```text
-PENDING
-   ↓
-SANCTIONED
-   ↓
-DISBURSED
-   ↓
-CLOSED
-```
-
-Rejected Flow:
-
-```text
-PENDING
-   ↓
-REJECTED
-```
-
----
-
-## 📋 Business Rules (BRE)
-
-A loan application is rejected if:
-
-- Age is below 23 years
-- Age is above 50 years
-- Monthly salary is below ₹25,000
-- Employment status is UNEMPLOYED
-- PAN format is invalid
-
-Valid PAN Format:
-
-```text
-AAAAA9999A
-```
-
----
-
-## 💰 Loan Calculation
-
-```text
-Interest Rate = 12% per annum
-
-SI = (P × R × T) / (365 × 100)
-
-Total Repayment = Principal + Interest
-```
-
----
-
-## ⚙️ Environment Variables
-
-### Backend (`server/.env`)
+### server/.env
 
 ```env
 PORT=5000
@@ -177,7 +76,7 @@ JWT_SECRET=
 CLIENT_URL=
 ```
 
-### Frontend (`client/.env.local`)
+### client/.env.local
 
 ```env
 NEXT_PUBLIC_API_URL=
@@ -185,7 +84,7 @@ NEXT_PUBLIC_API_URL=
 
 ---
 
-## 🚀 Installation
+## Installation
 
 Clone the repository:
 
@@ -210,16 +109,20 @@ npm install
 
 ---
 
-## ▶️ Running the Project
+## Running the Project
 
-### Terminal 1 — Backend
+### Terminal 1
+
+Start Backend:
 
 ```bash
 cd server
 npm run dev
 ```
 
-### Terminal 2 — Frontend
+### Terminal 2
+
+Start Frontend:
 
 ```bash
 cd client
@@ -234,7 +137,7 @@ http://localhost:5000
 
 ---
 
-## 🌱 Seed Demo Users
+## Seed Demo Users
 
 ```bash
 cd server
@@ -243,24 +146,109 @@ npm run seed
 
 ---
 
-## 🔐 Role-Based Access
+## Borrower Flow
 
-| Role | Access |
-|--------|--------|
-| Admin | All Modules |
-| Sales | Sales Module |
-| Sanction | Sanction Module |
-| Disbursement | Disbursement Module |
-| Collection | Collection Module |
-| Borrower | Borrower Portal |
+```text
+Sign Up / Login
+      ↓
+Personal Details
+      ↓
+BRE Validation
+      ↓
+Salary Slip Upload
+      ↓
+Loan Configuration
+      ↓
+Apply Loan
+      ↓
+PENDING
+```
 
 ---
 
-## 📝 Notes
+## Loan Lifecycle
 
-- RBAC is enforced on both frontend and backend.
-- UTR numbers are unique across all payments.
-- Loan calculations are verified server-side.
+```text
+PENDING
+   ↓
+SANCTIONED
+   ↓
+DISBURSED
+   ↓
+CLOSED
+```
+
+Rejected loans:
+
+```text
+PENDING
+   ↓
+REJECTED
+```
+
+---
+
+## Business Rules (BRE)
+
+Applications are rejected if:
+
+- Age is below 23 years
+- Age is above 50 years
+- Monthly salary is below ₹25,000
+- Employment status is UNEMPLOYED
+- PAN format is invalid
+
+Valid PAN format:
+
+```text
+AAAAA9999A
+```
+
+---
+
+## Loan Calculation
+
+```text
+Interest Rate = 12% per annum
+
+SI = (P × R × T) / (365 × 100)
+
+Total Repayment = Principal + Interest
+```
+
+---
+
+## Operations Workflow
+
+### Sales
+Tracks registered borrowers who have not yet applied for a loan.
+
+### Sanction
+Approves or rejects pending loans.
+
+### Disbursement
+Marks approved loans as disbursed.
+
+### Collection
+Records repayments and automatically closes loans when the outstanding balance reaches zero.
+
+---
+
+## Security
+
+- JWT Authentication
+- Password Hashing using bcrypt
+- Protected Routes
+- Role-Based Access Control (RBAC)
+- Backend Authorization Middleware
+
+---
+
+## Notes
+
+- Role-based access is enforced on both frontend and backend.
+- UTR numbers must be unique.
+- Loan calculations are validated on the server before saving.
 - Loans automatically close when fully repaid.
 
 ---
