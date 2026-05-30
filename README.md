@@ -1,177 +1,254 @@
-# LoanFlow — Loan Management System
+# LoanFlow — Full Stack Loan Management System
 
-A production-quality internal fintech platform for managing loan applications end-to-end.
+A production-ready Loan Management System that manages the complete loan lifecycle, from borrower onboarding and application to approval, disbursement, repayment, and closure.
+
+## Live Demo
+
+Frontend:
+https://loan-flow-steel.vercel.app/login
+
+Backend:
+https://loanflow-21z9.onrender.com/
+
+> Note: The backend is hosted on Render's free tier. If the service has been idle, the first request may take up to 30–60 seconds while the server wakes up.
+
+---
 
 ## Tech Stack
 
-**Frontend**: Next.js 16 · TypeScript · Tailwind CSS v4 · Zustand · React Hook Form · Zod · Axios · React Hot Toast  
-**Backend**: Node.js · Express · TypeScript · MongoDB · Mongoose · JWT · bcrypt · Multer
+### Frontend
+- Next.js 16
+- TypeScript
+- Tailwind CSS v4
+- Zustand
+- React Hook Form
+- Zod
+- Axios
+
+### Backend
+- Node.js
+- Express.js
+- TypeScript
+- MongoDB
+- Mongoose
+- JWT
+- bcrypt
+- Multer
+
+---
+
+## Demo Credentials
+
+Password for all accounts:
+
+```text
+Password@123
+```
+
+| Email | Role |
+|---------|---------|
+| admin@test.com | ADMIN |
+| sales@test.com | SALES |
+| sanction@test.com | SANCTION |
+| disbursement@test.com | DISBURSEMENT |
+| collection@test.com | COLLECTION |
+| borrower@test.com | BORROWER |
 
 ---
 
 ## Project Structure
 
-```
-loan-management/
-├── client/          # Next.js 16 frontend
-└── server/          # Express backend
-```
-
----
-
-## Setup Instructions
-
-### Prerequisites
-
-- Node.js 18+
-- MongoDB running locally (or Atlas URI)
-
----
-
-### Backend Setup
-
-```bash
-cd server
-cp .env.example .env   # then edit .env with your values
-npm install
-```
-
-### Frontend Setup
-
-```bash
-cd client
-cp .env.example .env.local
-npm install
+```text
+client/     → Next.js Frontend
+server/     → Express Backend
 ```
 
 ---
 
 ## Environment Variables
 
-### `server/.env`
+### server/.env
 
-| Variable | Description | Default |
-|---|---|---|
-| `PORT` | Server port | `5000` |
-| `MONGODB_URI` | MongoDB connection string | `mongodb://localhost:27017/loan-management` |
-| `JWT_SECRET` | Secret for signing JWTs | *(required)* |
-| `CLIENT_URL` | Frontend origin for CORS | `http://localhost:3000` |
+```env
+PORT=5000
+MONGODB_URI=
+JWT_SECRET=
+CLIENT_URL=
+```
 
-### `client/.env.local`
+### client/.env.local
 
-| Variable | Description | Default |
-|---|---|---|
-| `NEXT_PUBLIC_API_URL` | Backend base URL | `http://localhost:5000` |
+```env
+NEXT_PUBLIC_API_URL=
+```
 
 ---
 
-## Running the Application
+## Installation
 
-### Start Backend (development)
+Clone the repository:
+
+```bash
+git clone https://github.com/adarsh062/LoanFlow.git
+cd LoanFlow
+```
+
+Install backend dependencies:
+
+```bash
+cd server
+npm install
+```
+
+Install frontend dependencies:
+
+```bash
+cd ../client
+npm install
+```
+
+---
+
+## Running the Project
+
+### Terminal 1
+
+Start Backend:
 
 ```bash
 cd server
 npm run dev
 ```
 
-### Start Frontend (development)
+### Terminal 2
+
+Start Frontend:
 
 ```bash
 cd client
 npm run dev
 ```
 
-Frontend: http://localhost:3000  
-Backend API: http://localhost:5000
+Frontend:
+http://localhost:3000
+
+Backend:
+http://localhost:5000
 
 ---
 
-## Seed Database
+## Seed Demo Users
 
 ```bash
 cd server
 npm run seed
 ```
 
-This creates 6 demo users with password **`Password@123`**:
-
-| Email | Role | Access |
-|---|---|---|
-| `admin@test.com` | ADMIN | All modules |
-| `sales@test.com` | SALES | Sales module |
-| `sanction@test.com` | SANCTION | Sanction module |
-| `disbursement@test.com` | DISBURSEMENT | Disbursement module |
-| `collection@test.com` | COLLECTION | Collection module |
-| `borrower@test.com` | BORROWER | Borrower portal |
-
 ---
 
 ## Borrower Flow
 
-```
+```text
 Sign Up / Login
       ↓
-Personal Details → BRE Validation (auto-runs on save)
-      ↓ (passes)
-Upload Salary Slip
+Personal Details
       ↓
-Loan Configuration & Apply
+BRE Validation
       ↓
-PENDING → SANCTIONED → DISBURSED → CLOSED
+Salary Slip Upload
+      ↓
+Loan Configuration
+      ↓
+Apply Loan
+      ↓
+PENDING
 ```
-
-**Step enforcement**: Each step is gated. A borrower cannot access Upload or Apply until BRE passes.
 
 ---
 
-## Operations Workflow
+## Loan Lifecycle
 
-1. **Sales**: View leads (borrowers who haven't applied yet)
-2. **Sanction**: Approve or reject PENDING loans (rejection requires reason)
-3. **Disbursement**: Mark SANCTIONED loans as DISBURSED
-4. **Collection**: Record payments (UTR, amount, date). Loan auto-closes when `outstandingBalance = 0`
+```text
+PENDING
+   ↓
+SANCTIONED
+   ↓
+DISBURSED
+   ↓
+CLOSED
+```
+
+Rejected loans:
+
+```text
+PENDING
+   ↓
+REJECTED
+```
 
 ---
 
 ## Business Rules (BRE)
 
-Loan applications are rejected if:
-- Age < 23 or > 50
-- Monthly salary < ₹25,000
-- Employment mode = UNEMPLOYED
-- Invalid PAN format (must match `AAAAA9999A`)
+Applications are rejected if:
+
+- Age is below 23 years
+- Age is above 50 years
+- Monthly salary is below ₹25,000
+- Employment status is UNEMPLOYED
+- PAN format is invalid
+
+Valid PAN format:
+
+```text
+AAAAA9999A
+```
 
 ---
 
 ## Loan Calculation
 
-```
+```text
 Interest Rate = 12% per annum
+
 SI = (P × R × T) / (365 × 100)
+
 Total Repayment = Principal + Interest
 ```
 
-Calculated live on the frontend (sliders) and recalculated server-side before saving.
+---
+
+## Operations Workflow
+
+### Sales
+Tracks registered borrowers who have not yet applied for a loan.
+
+### Sanction
+Approves or rejects pending loans.
+
+### Disbursement
+Marks approved loans as disbursed.
+
+### Collection
+Records repayments and automatically closes loans when the outstanding balance reaches zero.
 
 ---
 
-## API Reference
+## Security
 
-| Method | Endpoint | Auth | Roles |
-|---|---|---|---|
-| POST | `/api/auth/signup` | No | — |
-| POST | `/api/auth/login` | No | — |
-| GET | `/api/borrower/profile` | Yes | BORROWER |
-| POST | `/api/borrower/profile` | Yes | BORROWER |
-| POST | `/api/borrower/bre` | Yes | BORROWER |
-| POST | `/api/borrower/upload` | Yes | BORROWER |
-| POST | `/api/borrower/apply` | Yes | BORROWER |
-| GET | `/api/borrower/loan` | Yes | BORROWER |
-| GET | `/api/sales/leads` | Yes | SALES, ADMIN |
-| GET | `/api/sanction/loans` | Yes | SANCTION, ADMIN |
-| PUT | `/api/sanction/loans/:id/approve` | Yes | SANCTION, ADMIN |
-| PUT | `/api/sanction/loans/:id/reject` | Yes | SANCTION, ADMIN |
-| GET | `/api/disbursement/loans` | Yes | DISBURSEMENT, ADMIN |
-| PUT | `/api/disbursement/loans/:id/disburse` | Yes | DISBURSEMENT, ADMIN |
-| GET | `/api/collection/loans` | Yes | COLLECTION, ADMIN |
-| POST | `/api/collection/loans/:id/payment` | Yes | COLLECTION, ADMIN |
+- JWT Authentication
+- Password Hashing using bcrypt
+- Protected Routes
+- Role-Based Access Control (RBAC)
+- Backend Authorization Middleware
+
+---
+
+## Notes
+
+- Role-based access is enforced on both frontend and backend.
+- UTR numbers must be unique.
+- Loan calculations are validated on the server before saving.
+- Loans automatically close when fully repaid.
+
+---
