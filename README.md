@@ -2,38 +2,28 @@
 
 A production-ready Loan Management System that manages the complete loan lifecycle, from borrower onboarding and application to approval, disbursement, repayment, and closure.
 
+---
+
 ## Live Demo
 
-Frontend:
-https://loan-flow-steel.vercel.app/login
+Frontend: https://loan-flow-steel.vercel.app/login
 
-Backend:
-https://loanflow-21z9.onrender.com/
+Backend: https://loanflow-21z9.onrender.com/
+
+Demo Video: https://drive.google.com/file/d/1VYZI4nh_6a1gO58Pcj-XOXVC4qIkFSMz/view?usp=drive_link
 
 > Note: The backend is hosted on Render's free tier. If the service has been idle, the first request may take up to 30–60 seconds while the server wakes up.
 
 ---
 
 ## Tech Stack
+Frontend: Next.js 16, TypeScript, Tailwind CSS v4, Zustand, React Hook Form, Zod, Axios
 
-### Frontend
-- Next.js 16
-- TypeScript
-- Tailwind CSS v4
-- Zustand
-- React Hook Form
-- Zod
-- Axios
+Backend: Node.js, Express.js, TypeScript, Multer
 
-### Backend
-- Node.js
-- Express.js
-- TypeScript
-- MongoDB
-- Mongoose
-- JWT
-- bcrypt
-- Multer
+Database: MongoDB, Mongoose
+
+Authentication & Security: JWT, bcrypt, Role-Based Access Control (RBAC)
 
 ---
 
@@ -111,29 +101,23 @@ npm install
 
 ## Running the Project
 
-### Terminal 1
-
-Start Backend:
+### Terminal 1 — Start Backend
 
 ```bash
 cd server
 npm run dev
 ```
 
-### Terminal 2
-
-Start Frontend:
+### Terminal 2 — Start Frontend
 
 ```bash
 cd client
 npm run dev
 ```
 
-Frontend:
-http://localhost:3000
+Frontend: http://localhost:3000
 
-Backend:
-http://localhost:5000
+Backend: http://localhost:5000
 
 ---
 
@@ -146,7 +130,7 @@ npm run seed
 
 ---
 
-## Borrower Flow
+## Borrower Journey
 
 ```text
 Sign Up / Login
@@ -178,7 +162,7 @@ DISBURSED
 CLOSED
 ```
 
-Rejected loans:
+Rejected Loans:
 
 ```text
 PENDING
@@ -188,9 +172,9 @@ REJECTED
 
 ---
 
-## Business Rules (BRE)
+## Business Rule Engine (BRE)
 
-Applications are rejected if:
+Applications are automatically rejected if:
 
 - Age is below 23 years
 - Age is above 50 years
@@ -198,7 +182,7 @@ Applications are rejected if:
 - Employment status is UNEMPLOYED
 - PAN format is invalid
 
-Valid PAN format:
+Valid PAN Format:
 
 ```text
 AAAAA9999A
@@ -208,47 +192,76 @@ AAAAA9999A
 
 ## Loan Calculation
 
-```text
-Interest Rate = 12% per annum
+Interest Rate: **12% per annum**
 
+```text
 SI = (P × R × T) / (365 × 100)
+
+Where:
+P = Principal Amount
+R = Rate of Interest
+T = Loan Tenure in Days
 
 Total Repayment = Principal + Interest
 ```
 
 ---
 
-## Operations Workflow
+## Operations Dashboard
 
 ### Sales
-Tracks registered borrowers who have not yet applied for a loan.
+
+Tracks registered borrowers who have not yet submitted a loan application.
 
 ### Sanction
-Approves or rejects pending loans.
+
+Reviews pending loan applications and approves or rejects them with a reason.
 
 ### Disbursement
-Marks approved loans as disbursed.
+
+Handles approved loans and marks them as disbursed.
 
 ### Collection
-Records repayments and automatically closes loans when the outstanding balance reaches zero.
+
+Records borrower repayments and automatically closes loans when the outstanding balance reaches zero.
 
 ---
 
-## Security
+## Security & Access Control
 
 - JWT Authentication
 - Password Hashing using bcrypt
 - Protected Routes
 - Role-Based Access Control (RBAC)
 - Backend Authorization Middleware
+- Route-Level Access Restrictions
+- Unique UTR Validation
+
+---
+
+## Features
+
+- Borrower Registration & Login
+- Multi-Step Loan Application Flow
+- Server-Side BRE Validation
+- Salary Slip Upload
+- Live Interest & Repayment Calculation
+- Loan Lifecycle Management
+- Operations Dashboard
+- Role-Based Access Control
+- Loan Repayment Tracking
+- Automatic Loan Closure
+- Responsive UI
 
 ---
 
 ## Notes
 
 - Role-based access is enforced on both frontend and backend.
-- UTR numbers must be unique.
+- UTR numbers are unique across all repayments.
 - Loan calculations are validated on the server before saving.
-- Loans automatically close when fully repaid.
+- Borrowers cannot access internal dashboard modules.
+- Loans automatically close when the repayment amount equals the total repayment due.
+
 
 ---
